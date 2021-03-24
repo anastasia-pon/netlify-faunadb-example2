@@ -9,14 +9,36 @@ const create = (data) => {
   })
 }
 
-const readAll = () => {
-  return fetch('/.netlify/functions/todos-read-all').then((response) => {
+const createCart = (data) => {
+  return fetch('/.netlify/functions/cart-create', {
+    body: JSON.stringify(data),
+    method: 'POST'
+  }).then(response => {
     return response.json()
   })
 }
 
-const update = (todoId, data) => {
-  return fetch(`/.netlify/functions/todos-update/${todoId}`, {
+
+const readAll = () => {
+  return fetch('/.netlify/functions/products-read-all').then((response) => {
+    return response.json()
+  })
+}
+
+const readOne = (todoId) => {
+  return fetch(`/.netlify/functions/products-read/${todoId}`).then((response) => {
+    return response.json()
+  })
+}
+
+const readCart = (cartId) => {
+  return fetch(`/.netlify/functions/cart-read/${cartId}`).then((response) => {
+    return response.json()
+  })
+}
+
+const update = (cartId, data) => {
+  return fetch(`/.netlify/functions/todos-update/${cartId}`, {
     body: JSON.stringify(data),
     method: 'POST'
   }).then(response => {
@@ -46,7 +68,10 @@ const batchDeleteTodo = (todoIds) => {
 export default {
   create: create,
   readAll: readAll,
+  readOne: readOne,
   update: update,
   delete: deleteTodo,
-  batchDelete: batchDeleteTodo
+  batchDelete: batchDeleteTodo,
+  readCart: readCart,
+  createCart: createCart
 }
